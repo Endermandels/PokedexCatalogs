@@ -1,3 +1,4 @@
+// Connects to the Postgres db
 require('dotenv').config();
 
 const { Pool } = require('pg'); // Basically: from pg import Pool

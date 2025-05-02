@@ -63,11 +63,30 @@ async function updatePokemon(req, res) {
             return res.status(404).json({ error: 'Pokemon Not Found' });
         }
 
-        res.status(201).json(result.rows[0]);
+        res.status(200).json(result.rows[0]);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to update Pokemon' });
     }
 }
 
-module.exports = { getAllPokemon, getPokemonById, createPokemon, updatePokemon };
+async function deletePokemon(req, res) {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query(
+            'DELETE FROM pokemon WHERE id = $1 RETURNING *', [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Pokemon Not Found' });
+        }
+
+        res.status(200).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to update Pokemon' });
+    }
+}
+
+module.exports = { getAllPokemon, getPokemonById, createPokemon, updatePokemon, deletePokemon };

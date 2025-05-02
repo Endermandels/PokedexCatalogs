@@ -2,11 +2,11 @@
 
 1. Post/Put Pokemon data into PostgreSQL db
 2. Get Pokemon data from PostgreSQL db
+3. Remove Pokemon data from PostgreSQL db
 
 # OPEN
 
 ## Backend
-3. Remove Pokemon data from PostgreSQL db
 ## Frontend
 4. Make table view of db
 5. Make pagination

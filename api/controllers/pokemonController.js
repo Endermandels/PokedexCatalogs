@@ -34,4 +34,40 @@ async function getPokemonById(req, res) {
     }
 }
 
-module.exports = { getAllPokemon, getPokemonById };
+async function createPokemon(req, res) {
+    const { name, type, description } = req.body;
+
+    try {
+        const result = await pool.query(
+            'INSERT INTO pokemon (name, type, description) VALUES ($1, $2, $3) RETURNING *',
+            [name, type, description]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to create Pokemon' });
+    }
+}
+
+async function updatePokemon(req, res) {
+    const { id } = req.params;
+    const { name, type, description } = req.body;
+
+    try {
+        const result = await pool.query(
+            'UPDATE pokemon SET name = $1, type = $2, description = $3 WHERE id = $4 RETURNING *',
+            [name, type, description, id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Pokemon Not Found' });
+        }
+
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Failed to update Pokemon' });
+    }
+}
+
+module.exports = { getAllPokemon, getPokemonById, createPokemon, updatePokemon };

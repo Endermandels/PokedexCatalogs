@@ -1,11 +1,13 @@
 require("dotenv").config();
 
+const cors = require("cors");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT;
 const pokemonRoutes = require('./routes/pokemon');
 
 app.use(express.json()); // used for accepting JSON data in a request body
+app.use(cors());
 app.use('/pokemon', pokemonRoutes);
 
 app.listen(PORT, () => {

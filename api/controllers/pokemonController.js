@@ -60,6 +60,7 @@ async function updatePokemon(req, res) {
         );
 
         if (result.rows.length === 0) {
+            console.error("Pokemon not found");
             return res.status(404).json({ error: 'Pokemon Not Found' });
         }
 

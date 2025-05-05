@@ -6,10 +6,20 @@ export async function fetchPokemon() {
 }
 
 export async function addPokemon(pokemon) {
+    console.log(pokemon);
     const res = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_API_PORT}/pokemon`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(pokemon),
+        body: JSON.stringify(pokemon)
+    });
+    return res.json();
+}
+
+export async function updatePokemon(pokemon, pokemonId) {
+    const res = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_API_PORT}/pokemon/${pokemonId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pokemon)
     });
     return res.json();
 }

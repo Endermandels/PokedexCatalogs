@@ -1,5 +1,5 @@
 // Creates a pokemon form
-export default function PokemonForm({ curPokemon, setCurPokemon, onSubmit, onCancel }) {
+export default function PokemonForm({ curPokemon, setCurPokemon, onSubmit, onDelete, onCancel }) {
     function handleChange(e) {
         const { name, value } = e.target;
         setCurPokemon({ ...curPokemon, [name]: value }); // ...prev basically copies prev into the current object
@@ -30,6 +30,7 @@ export default function PokemonForm({ curPokemon, setCurPokemon, onSubmit, onCan
                 onChange={handleChange}
             />
             <button type="submit">Save</button>
+            {onDelete && <button type="button" onClick={onDelete}>Delete</button>}
             {onCancel && <button type='button' onClick={onCancel}>Cancel</button>}
         </form>
     );

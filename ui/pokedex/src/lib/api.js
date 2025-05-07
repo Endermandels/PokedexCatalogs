@@ -23,3 +23,11 @@ export async function updatePokemon(pokemon, pokemonId) {
     });
     return res.json();
 }
+
+export async function deletePokemon(pokemonId) {
+    const res = await fetch(`http://localhost:${process.env.NEXT_PUBLIC_API_PORT}/pokemon/${pokemonId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+    });
+    return res.json();
+}

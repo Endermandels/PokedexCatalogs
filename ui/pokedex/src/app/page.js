@@ -16,14 +16,20 @@ export default function Home() {
 
   // Called upon rendering the Home page
   useEffect(() => {
-    fetchPokemon().then(setPokemonList); // Updates the pokemonList upon fetching the pokemon data
+    fetchPokemon().then(data => {
+      const sorted = [...data].sort((a, b) => a.id - b.id);
+      setPokemonList(sorted);
+    }); // Updates the pokemonList upon fetching the pokemon data
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formatted = { ...curPokemon, type: curPokemon.type.split(",").map(t => t.trim()) }; // reformat the type string into an array of strings
     const added = curPokemonId > -1 ? await updatePokemon(formatted, curPokemonId) : await addPokemon(formatted); // add pokemon to db
-    setPokemonList((prev) => [...prev, added]); // add pokemon to pokemonList (using the functional notation avoids messy async problems)
+    fetchPokemon().then(data => {
+      const sorted = [...data].sort((a, b) => a.id - b.id);
+      setPokemonList(sorted);
+    });
     setCurPokemon({ name: "", type: "", description: "" }); // reset cur pokemon data
     setCurPokemonId(-1);
     setShowForm(false); // Hide form
